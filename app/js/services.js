@@ -19,6 +19,7 @@ pokerAppServices.service('socket', ['$rootScope',  '$timeout', function ($rootSc
 
 pokerAppServices.factory('socket', ['$rootScope', function ($rootScope) {
   var socket = io.connect(location.protocol + '//' + location.hostname, {
+    'resource': 'hatjitsu/socket.io',
     'port': location.port,
     'reconnect': true,
     'reconnection delay': 500,
