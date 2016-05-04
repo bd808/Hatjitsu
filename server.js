@@ -37,7 +37,7 @@ app.configure(function(){
   //app.use(express.logger());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(basedir, express.static(__dirname + '/app'));
+  app.use(basedir, express.static(__dirname + '/app', {maxAge: 86400000*30}));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
