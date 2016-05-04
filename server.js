@@ -45,11 +45,13 @@ app.get('/', function(req, res) {
    res.redirect(basedir + '/');
 });
 
-app.get(basedir, function(req, res) {
-   res.redirect(basedir + '/');
-});
 app.get(basedir + '/', function(req, res) {
-  res.render('index.ejs');
+  var url = req.originalUrl || req.url;
+  if ("/" != url[url.length - 1]) {
+    res.redirect(basedir + '/');
+  } else {
+    res.render('index.ejs');
+  }
 });
 
 app.get(basedir + '/debug_state', function(req, res) {
