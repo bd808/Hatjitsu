@@ -45,6 +45,9 @@ app.get('/', function(req, res) {
    res.redirect(basedir + '/');
 });
 
+app.get(basedir, function(req, res) {
+   res.redirect(basedir + '/');
+});
 app.get(basedir + '/', function(req, res) {
   res.render('index.ejs');
 });
