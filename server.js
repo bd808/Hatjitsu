@@ -9,8 +9,8 @@ var express = require('express'),
 
 // Prefix paths with tool name
 var basedir = '/hatjitsu';
-// Use port provided by portgrabber
-var port = process.env.PORT;
+// Use port provided by portgrabber or default to 5000
+var port = process.env.PORT || 5000;
 
 var app = module.exports = express.createServer();
 var io = require('socket.io').listen(app, { resource: basedir + '/socket.io' });
