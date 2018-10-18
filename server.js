@@ -9,8 +9,8 @@ var env = process.env.NODE_ENV || 'development';
 var express = require('express'),
     fs = require('fs');
 
-// Use port provided by portgrabber
-var port = process.env.PORT;
+// Use port provided by portgrabber or default to 8000
+var port = process.env.PORT || 8000;
 
 var app = module.exports = express.createServer();
 var io = require('socket.io').listen(app);
