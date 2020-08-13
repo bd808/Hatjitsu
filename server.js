@@ -9,10 +9,12 @@ var env = process.env.NODE_ENV || 'development';
 var express = require('express'),
     fs = require('fs');
 
+// Use port provided by portgrabber
+var port = process.env.PORT;
+
 var app = module.exports = express.createServer();
 var io = require('socket.io').listen(app);
 var lobbyClass = require('./lib/lobby.js');
-var config = require('./config.js')[env];
 var path = require('path');
 
 var gzippo = require('gzippo');
@@ -35,19 +37,8 @@ app.configure(function(){
   app.use(express.logger());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.staticCache());
-});
-
-app.configure('development', function(){
   app.use(express.static(__dirname + '/app'));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function(){
-  var oneDay = 86400000;
-  // app.use(assetsManagerMiddleware);
-  app.use(gzippo.staticGzip(__dirname + '/app'));
-  app.use(express.errorHandler());
 });
 
 app.get('/', function(req, res) {
@@ -94,7 +85,6 @@ io.configure('development', function(){
   io.set('log level', 2);
 });
 
-var port = process.env.app_port || 5000; // Use the port that Heroku provides or default to 5000
 app.listen(port, function() {
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
@@ -117,7 +107,7 @@ io.sockets.on('connection', function (socket) {
     // console.log("On disconnect", socket.id);
     lobby.broadcastDisconnect(socket);
   });
-  
+
   socket.on('create room', function (data, callback) {
     statsSocketMessagesReceived++;
     // console.log("on create room", socket.id, data);
